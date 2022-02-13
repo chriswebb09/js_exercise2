@@ -14,12 +14,6 @@ var nonppc = [
 
 var ppc = [];
 
-// function makeNonPPCNames(names) {
-//     $("#nonppc-names-list").empty();
-//     $.each(names, function(index, value) {
-//         $("#nonppc-names-list").append("<div data-name='" + value + "' class='list-item ui-widget-content row' id='" + value + "' style='position: relative; background-color: rgb(255, 255, 255);'>" + (index + 1) + ".  " + value + "</div>");
-//     });
-// }
 
 function makeNames(names, selector) {
     $(selector).empty();
