@@ -14,21 +14,23 @@ var nonppc = [
 
 var ppc = [];
 
-function makeNonPPCNames(names) {
-    $("#nonppc-names-list").empty();
-    $.each(names, function(index, value) {
-        $("#nonppc-names-list").append("<div data-name='" + value + "' class='list-item ui-widget-content row' id='" + value + "' style='position: relative; background-color: rgb(255, 255, 255);'>" + (index + 1) + ".  " + value + "</div>");
-    });
-}
+// function makeNonPPCNames(names) {
+//     $("#nonppc-names-list").empty();
+//     $.each(names, function(index, value) {
+//         $("#nonppc-names-list").append("<div data-name='" + value + "' class='list-item ui-widget-content row' id='" + value + "' style='position: relative; background-color: rgb(255, 255, 255);'>" + (index + 1) + ".  " + value + "</div>");
+//     });
+// }
 
-function makePPCNames(names) {
-    $("#ppc-names-list").empty();
+function makeNames(names, selector) {
+    $(selector).empty();
     $.each(names, function(index, value) {
-        $("#ppc-names-list").append("<div data-name='" + value + "' class='list-item ui-widget-content row' id='" + value + "' style='position: relative; background-color: rgb(255, 255, 255);'>" + (index + 1) + ".  " + value + "</div>");
-        var elementItem = $("#" + value);
-        clearAddedClasses(elementItem);
-        updateStyling(elementItem);
-        elementItem.css({'margin-left' : '15px'});
+        $(selector).append("<div data-name='" + value + "' class='list-item ui-widget-content row' id='" + value + "' style='position: relative; background-color: rgb(255, 255, 255);'>" + (index + 1) + ".  " + value + "</div>");
+        if (selector == "#ppc-names-list") {
+            var elementItem = $("#" + value);
+            clearAddedClasses(elementItem);
+            updateStyling(elementItem);
+            elementItem.css({'margin-left' : '15px'});
+        }
     });
 }
 
@@ -112,7 +114,7 @@ function makeDraggable() {
 
 $(document).ready(function(){
     setupUI();
-    makeNonPPCNames(nonppc);
+    makeNames(nonppc, "#nonppc-names-list");
     makeDraggable();
     
     $(".name-container").droppable({
@@ -141,8 +143,8 @@ $(document).ready(function(){
                 nonppc = splitTextAndAddToArray(element, nonppc);
                 ppc = splitTextAndRemoveFromArray(element, ppc);
             }
-            makeNonPPCNames(nonppc);
-            makePPCNames(ppc);
+            makeNames(nonppc, "#nonppc-names-list");
+            makeNames(ppc, "#ppc-names-list");
             makeDraggable();
             $("html,body").css("cursor","default");
         }
