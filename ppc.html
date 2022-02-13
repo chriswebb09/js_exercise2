@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Drag and Drop</title>
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+        <script src="ppc.js"></script>
+        <link rel="stylesheet" href="ppc.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col" id="header">
+                    <h1>Party Planning Committee</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 element-container">
+                    <div class="ui-widget-header name-container" id="non-ppc"> 
+                        <div class="container-header">
+                            <p>Non-PPC</p>
+                        </div>
+                    </div>
+                    <div class="names-list col" id="nonppc-names-list"></div>
+                </div>
+                <div class="col-sm-2 element-container">
+                    <div class="ui-widget-header name-container", id="ppc"> 
+                        <div class="container-header">
+                            <p>PPC</p>
+                        </div>
+                    </div>
+                    <div class="names-list row" #id="ppc-names"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
