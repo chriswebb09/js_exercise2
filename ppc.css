@@ -25,7 +25,12 @@
 [data-name] { 
     border: 1px solid lightgray;
     clear: both;
+    align-content: center;
+    align-items: center;
     display: block;
+    padding-left: 10px;
+    padding-top: 5px;
+    height: 35px;
     z-index: 5;
 }
 
@@ -43,6 +48,7 @@
 }
 
 .names-list {
+    position: absolute;
     clear: both;
     align-content: center;
     align-items: center;

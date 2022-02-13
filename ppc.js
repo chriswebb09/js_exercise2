@@ -1,4 +1,4 @@
-var names = [
+var nonppc = [
     "Phyllis",
     "Angela",
     "Dwight",
@@ -14,12 +14,21 @@ var names = [
 
 var ppc = [];
 
-var nonppc = [];
-
-function makeNames(names) {
+function makeNonPPCNames(names) {
     $("#nonppc-names-list").empty();
     $.each(names, function(index, value) {
-        $("#nonppc-names-list").append("<div data-name='" + value + "' class='list-item ui-widget-content row' id='" + value + "'>" + (index + 1) + ".  " + value + "</div>");
+        $("#nonppc-names-list").append("<div data-name='" + value + "' class='list-item ui-widget-content row' id='" + value + "' style='position: relative; background-color: rgb(255, 255, 255);'>" + (index + 1) + ".  " + value + "</div>");
+    });
+}
+
+function makePPCNames(names) {
+    $("#ppc-names-list").empty();
+    $.each(names, function(index, value) {
+        $("#ppc-names-list").append("<div data-name='" + value + "' class='list-item ui-widget-content row' id='" + value + "' style='position: relative; background-color: rgb(255, 255, 255);'>" + (index + 1) + ".  " + value + "</div>");
+        var elementItem = $("#" + value);
+        clearAddedClasses(elementItem);
+        updateStyling(elementItem);
+        elementItem.css({'margin-left' : '15px'});
     });
 }
 
@@ -56,13 +65,35 @@ function splitTextAndAddToArray(element, array) {
     return array;
 }
 
-$(document).ready(function(){
+function splitTextAndRemoveFromArray(element, array) {
+    var text = element.text();
+    var textElements = text.split(" ");
+    var textToFilter = textElements[2];
+    console.log(textToFilter);
+    array = array.filter(function(item) {
+        return item !== textToFilter
+    });
+    return array;
+}
 
-    makeNames(names);
+function mouseOn(element) {
+    $(element).css({"background-color": "#f8f8dc"});
+    $("html,body").css("cursor","move");
+}
 
+function mouseOff(element) {
+    setWhite(element);
+    $("html,body").css("cursor","pointer");
+}
+
+function setWhite(element) {
+    $(element).css("background-color", "white");
+}
+
+function makeDraggable() {
     $(".list-item").draggable({ 
         revert: function(event , ui) {
-            $(this).css("background-color", "white");
+            setWhite(this);
             clearAddedClasses(this);
             return true;
         },
@@ -71,6 +102,12 @@ $(document).ready(function(){
             $(this).css("background-color", "#f7f7c0 !important");
         }
     });
+}
+
+$(document).ready(function(){
+
+    makeNonPPCNames(nonppc);
+    makeDraggable();
     
     $(".name-container").droppable({
         over: function(event, ui) {
@@ -89,30 +126,34 @@ $(document).ready(function(){
                 return; 
             }
 
-            addElement(parent, ui.draggable)
             clearAddedClasses(element);
             updateStyling(element);
             
             if ($(this).attr('id') == "ppc") {
-                element.css({'margin-left' : "15px"});
                 ppc = splitTextAndAddToArray(element, ppc);
-                console.log(ppc);
+                nonppc = splitTextAndRemoveFromArray(element, nonppc);
+                makeNonPPCNames(nonppc);
+                makePPCNames(ppc);
+                makeDraggable();
             } else {
                 nonppc = splitTextAndAddToArray(element, nonppc);
-                console.log(nonppc);
+                ppc = splitTextAndRemoveFromArray(element, ppc);
+                makeNonPPCNames(nonppc);
+                makePPCNames(ppc);
+                makeDraggable();
             }
         }
     });
     
     $(document).on({ 
         mouseenter: function () {
-            $(this).css({"background-color": "#f8f8dc"});
-            $("html,body").css("cursor","move");
+            mouseOn(this);
         },
+
         mouseleave: function () {
-            $(this).css({"background-color": "white"});
-            $("html,body").css("cursor","pointer");
+            mouseOff(this);
         }
+
     }, ".list-item");
 });
 
