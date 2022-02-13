@@ -109,6 +109,7 @@ function makeDraggable() {
 function makeDroppable(containerElement, item) {
     var parent = $(containerElement).parent();
     var element = item.helper;
+
     if ($(element.parent()).closest(parent).length == 1) {
         $("html,body").css("cursor","default");
         return; 
@@ -130,6 +131,7 @@ function makeDroppable(containerElement, item) {
     makeDraggable();
     $("html,body").css("cursor","default");
 }
+
 $(document).ready(function(){
     setupUI();
     makeNames(nonppc, "#nonppc-names-list");
