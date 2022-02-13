@@ -38,6 +38,12 @@ function updateOffHover(element) {
     element.removeClass('highlighter_focus_in');
 }
 
+function updateStyling(element) {
+    element.css({"background-color": "white"});
+    element.attr('style', 'position : relative');
+    element.css({'width' : '160px'});
+}
+
 $(document).ready(function(){
 
     makeNames(names);
@@ -45,10 +51,10 @@ $(document).ready(function(){
     $(".list-item").draggable({ 
         revert: function(event , ui) {
             $(this).css("background-color", "white");
-            $(this).removeClass('highlighter_focus_in');
-            $(this).removeClass('highlighter_focus_out');
+            clearAddedClasses(this);
             return true;
         },
+        
         drag: function (event, ui) {
             $(this).css("background-color", "#f7f7c0 !important");
         }
@@ -77,10 +83,7 @@ $(document).ready(function(){
             namesList.append(ui.draggable);
 
             clearAddedClasses(element);
-
-            element.css({"background-color": "white"});
-            element.attr('style', 'position : relative');
-            element.css({'width' : '160px'});
+            updateStyling(element);
 
             var id = $(this).attr('id');
             if (id == "ppc") {
