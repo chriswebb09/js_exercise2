@@ -90,6 +90,10 @@ function setWhite(element) {
     $(element).css("background-color", "white");
 }
 
+function setupUI() {
+    $("#non-ppc").after("<div class='names-list col' id='nonppc-names-list'></div>");
+    $("#ppc").after("<div class='names-list row' id='ppc-names-list'></div>");
+}
 function makeDraggable() {
     $(".list-item").draggable({ 
         revert: function(event , ui) {
@@ -105,7 +109,7 @@ function makeDraggable() {
 }
 
 $(document).ready(function(){
-
+    setupUI();
     makeNonPPCNames(nonppc);
     makeDraggable();
     
