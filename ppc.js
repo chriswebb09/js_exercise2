@@ -23,6 +23,21 @@ function makeNames(names) {
     });
 }
 
+function clearAddedClasses(element) {
+    element.removeClass('highlighter_focus_in');
+    element.removeClass('highlighter_focus_out');
+}
+
+function updateHover(element) {
+    element.addClass('highlighter_focus_in');
+    element.removeClass('highlighter_focus_out');
+}
+
+function updateOffHover(element) {
+    element.addClass('highlighter_focus_out');
+    element.removeClass('highlighter_focus_in');
+}
+
 $(document).ready(function(){
 
     makeNames(names);
@@ -41,31 +56,35 @@ $(document).ready(function(){
     
     $(".name-container").droppable({
         over: function(event, ui) {
-            ui.helper.addClass('highlighter_focus_in');
-            ui.helper.removeClass('highlighter_focus_out');
+            var element = ui.helper;
+            updateHover(element);
          },
+
          out: function(event, ui) {
-            ui.helper.addClass('highlighter_focus_out');
-            ui.helper.removeClass('highlighter_focus_in');
+            var element = ui.helper;
+            updateOffHover(element);
          },
+
         drop: function(event, ui) {
-            if ($(ui.helper.parent()).closest($(this).parent()).length == 1) {
+            var parent = $(this).parent();
+            var element = ui.helper;
+
+            if ($(element.parent()).closest(parent).length == 1) {
                 return; 
             }
 
-            var id = $(this).attr('id');
-            
-            var parent = $(this).parent();
             var namesList = parent.find(".names-list");
             namesList.append(ui.draggable);
-            ui.helper.removeClass('highlighter_focus_in');
-            ui.helper.removeClass('highlighter_focus_out');
-            ui.helper.css({"background-color": "white"});
-            ui.helper.attr('style', 'position : relative');
-            ui.helper.css({'width' : '160px'});
 
+            clearAddedClasses(element);
+
+            element.css({"background-color": "white"});
+            element.attr('style', 'position : relative');
+            element.css({'width' : '160px'});
+
+            var id = $(this).attr('id');
             if (id == "ppc") {
-                ui.helper.css({'margin-left' : "15px"});
+                element.css({'margin-left' : "15px"});
             }
         }
     });
