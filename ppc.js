@@ -14,7 +14,6 @@ var nonppc = [
 
 var ppc = [];
 
-
 function makeNames(names, selector) {
     $(selector).empty();
     $.each(names, function(index, value) {
@@ -90,6 +89,7 @@ function setupUI() {
     $("#non-ppc").after("<div class='names-list col' id='nonppc-names-list'></div>");
     $("#ppc").after("<div class='names-list row' id='ppc-names-list'></div>");
 }
+
 function makeDraggable() {
     $(".list-item").draggable({ 
         revert: function(event , ui) {
@@ -106,41 +106,46 @@ function makeDraggable() {
     });
 }
 
+function makeDroppable(containerElement, item) {
+    var parent = $(containerElement).parent();
+    var element = item.helper;
+    if ($(element.parent()).closest(parent).length == 1) {
+        $("html,body").css("cursor","default");
+        return; 
+    }
+    
+    clearAddedClasses(element);
+    updateStyling(element);
+            
+    if ($(containerElement).attr('id') == "ppc") {
+        ppc = splitTextAndAddToArray(element, ppc);
+        nonppc = splitTextAndRemoveFromArray(element, nonppc);
+    } else {
+        nonppc = splitTextAndAddToArray(element, nonppc);
+        ppc = splitTextAndRemoveFromArray(element, ppc);
+    }
+    
+    makeNames(nonppc, "#nonppc-names-list");
+    makeNames(ppc, "#ppc-names-list");
+    makeDraggable();
+    $("html,body").css("cursor","default");
+}
 $(document).ready(function(){
     setupUI();
     makeNames(nonppc, "#nonppc-names-list");
     makeDraggable();
     
     $(".name-container").droppable({
-
         over: function(event, ui) {
             updateHover(ui.helper);
-         },
-
-         out: function(event, ui) {
+        },
+        
+        out: function(event, ui) {
             updateOffHover(ui.helper);
-         },
+        },
 
         drop: function(event, ui) {
-            var parent = $(this).parent();
-            var element = ui.helper;
-            if ($(element.parent()).closest(parent).length == 1) {
-                $("html,body").css("cursor","default");
-                return; 
-            }
-            clearAddedClasses(element);
-            updateStyling(element);
-            if ($(this).attr('id') == "ppc") {
-                ppc = splitTextAndAddToArray(element, ppc);
-                nonppc = splitTextAndRemoveFromArray(element, nonppc);
-            } else {
-                nonppc = splitTextAndAddToArray(element, nonppc);
-                ppc = splitTextAndRemoveFromArray(element, ppc);
-            }
-            makeNames(nonppc, "#nonppc-names-list");
-            makeNames(ppc, "#ppc-names-list");
-            makeDraggable();
-            $("html,body").css("cursor","default");
+            makeDroppable(this, ui);
         }
     });
     
