@@ -110,6 +110,7 @@ $(document).ready(function(){
     makeDraggable();
     
     $(".name-container").droppable({
+
         over: function(event, ui) {
             updateHover(ui.helper);
          },
@@ -121,31 +122,26 @@ $(document).ready(function(){
         drop: function(event, ui) {
             var parent = $(this).parent();
             var element = ui.helper;
-
             if ($(element.parent()).closest(parent).length == 1) {
                 return; 
             }
-
             clearAddedClasses(element);
             updateStyling(element);
-            
             if ($(this).attr('id') == "ppc") {
                 ppc = splitTextAndAddToArray(element, ppc);
                 nonppc = splitTextAndRemoveFromArray(element, nonppc);
-                makeNonPPCNames(nonppc);
-                makePPCNames(ppc);
-                makeDraggable();
             } else {
                 nonppc = splitTextAndAddToArray(element, nonppc);
                 ppc = splitTextAndRemoveFromArray(element, ppc);
-                makeNonPPCNames(nonppc);
-                makePPCNames(ppc);
-                makeDraggable();
             }
+            makeNonPPCNames(nonppc);
+            makePPCNames(ppc);
+            makeDraggable();
         }
     });
     
     $(document).on({ 
+
         mouseenter: function () {
             mouseOn(this);
         },
