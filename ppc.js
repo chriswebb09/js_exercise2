@@ -17,7 +17,7 @@ var ppc = [];
 var nonppc = [];
 
 function makeNames(names) {
-    $("#nonppc-names").empty();
+    $("#nonppc-names-list").empty();
     $.each(names, function(index, value) {
         $("#nonppc-names-list").append("<div data-name='" + value + "' class='list-item ui-widget-content row' id='" + value + "'>" + (index + 1) + ".  " + value + "</div>");
     });
@@ -44,6 +44,18 @@ function updateStyling(element) {
     element.css({'width' : '160px'});
 }
 
+function addElement(element, newChild) {
+    var namesList = element.find(".names-list");
+    namesList.append(newChild);
+}
+
+function splitTextAndAddToArray(element, array) {
+    var text = element.text();
+    var textElements = text.split(" ");
+    array.push(textElements[2]);
+    return array;
+}
+
 $(document).ready(function(){
 
     makeNames(names);
@@ -54,7 +66,7 @@ $(document).ready(function(){
             clearAddedClasses(this);
             return true;
         },
-        
+
         drag: function (event, ui) {
             $(this).css("background-color", "#f7f7c0 !important");
         }
@@ -62,13 +74,11 @@ $(document).ready(function(){
     
     $(".name-container").droppable({
         over: function(event, ui) {
-            var element = ui.helper;
-            updateHover(element);
+            updateHover(ui.helper);
          },
 
          out: function(event, ui) {
-            var element = ui.helper;
-            updateOffHover(element);
+            updateOffHover(ui.helper);
          },
 
         drop: function(event, ui) {
@@ -79,15 +89,17 @@ $(document).ready(function(){
                 return; 
             }
 
-            var namesList = parent.find(".names-list");
-            namesList.append(ui.draggable);
-
+            addElement(parent, ui.draggable)
             clearAddedClasses(element);
             updateStyling(element);
-
-            var id = $(this).attr('id');
-            if (id == "ppc") {
+            
+            if ($(this).attr('id') == "ppc") {
                 element.css({'margin-left' : "15px"});
+                ppc = splitTextAndAddToArray(element, ppc);
+                console.log(ppc);
+            } else {
+                nonppc = splitTextAndAddToArray(element, nonppc);
+                console.log(nonppc);
             }
         }
     });
