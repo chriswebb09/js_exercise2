@@ -94,13 +94,18 @@ function makeDraggable() {
     $(".list-item").draggable({ 
         revert: function(event , ui) {
             setWhite(this);
-            clearAddedClasses(this);
+            clearAddedClasses($("#ppc-container-header"));
+            clearAddedClasses($("#non-ppc-container-header"));
             $("html,body").css("cursor","default");
             return true;
         },
 
+        start: function (event, ui) {
+            updateOffHover($("#ppc-container-header"));
+            updateOffHover($("#non-ppc-container-header"));
+        },
+
         drag: function (event, ui) {
-            $(this).css("background-color", "#f7f7c0 !important");
             $("html,body").css("cursor","move");
         }
     });
@@ -114,8 +119,8 @@ function makeDroppable(containerElement, item) {
         $("html,body").css("cursor","default");
         return; 
     }
-    
-    clearAddedClasses(element);
+    clearAddedClasses($("#ppc-container-header"));
+    clearAddedClasses($("#non-ppc-container-header"));
     updateStyling(element);
             
     if ($(containerElement).attr('id') == "ppc") {
@@ -125,7 +130,7 @@ function makeDroppable(containerElement, item) {
         nonppc = splitTextAndAddToArray(element, nonppc);
         ppc = splitTextAndRemoveFromArray(element, ppc);
     }
-    
+
     makeNames(nonppc, "#nonppc-names-list");
     makeNames(ppc, "#ppc-names-list");
     makeDraggable();
@@ -139,11 +144,16 @@ $(document).ready(function(){
     
     $(".name-container").droppable({
         over: function(event, ui) {
-            updateHover(ui.helper);
+            if ($(this).attr('id') == "ppc") {
+                updateHover($("#ppc-container-header"));
+            } else {
+                updateHover($("#non-ppc-container-header"));
+            }
         },
         
         out: function(event, ui) {
-            updateOffHover(ui.helper);
+            updateOffHover($("#ppc-container-header"));
+            updateOffHover($("#non-ppc-container-header"));
         },
 
         drop: function(event, ui) {

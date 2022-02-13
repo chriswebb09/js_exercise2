@@ -6,11 +6,12 @@
 
 /* change color if being dragged */
 .highlighter_focus_in {
-    background: #fded06 !important; 
+    background-color: #5b9ddb !important;
+    /* background: #fded06 !important;  */
 }
 
 .highlighter_focus_out {
-    background: #f8f880 !important;
+    background: #98bfe4 !important;
 }
 
 #header h1 {
@@ -46,6 +47,10 @@
     padding-left: 10px;
     padding-top: 20px;
 }
+
+/* .container-header-draggable {
+    background-color: #a5c6e4;
+} */
 
 .names-list {
     position: absolute;
