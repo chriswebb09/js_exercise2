@@ -83,7 +83,7 @@ function mouseOn(element) {
 
 function mouseOff(element) {
     setWhite(element);
-    $("html,body").css("cursor","pointer");
+    $("html,body").css("cursor","default");
 }
 
 function setWhite(element) {
@@ -99,11 +99,13 @@ function makeDraggable() {
         revert: function(event , ui) {
             setWhite(this);
             clearAddedClasses(this);
+            $("html,body").css("cursor","default");
             return true;
         },
 
         drag: function (event, ui) {
             $(this).css("background-color", "#f7f7c0 !important");
+            $("html,body").css("cursor","move");
         }
     });
 }
@@ -127,6 +129,7 @@ $(document).ready(function(){
             var parent = $(this).parent();
             var element = ui.helper;
             if ($(element.parent()).closest(parent).length == 1) {
+                $("html,body").css("cursor","default");
                 return; 
             }
             clearAddedClasses(element);
@@ -141,6 +144,7 @@ $(document).ready(function(){
             makeNonPPCNames(nonppc);
             makePPCNames(ppc);
             makeDraggable();
+            $("html,body").css("cursor","default");
         }
     });
     
