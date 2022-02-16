@@ -86,7 +86,7 @@ function setWhite(element) {
 }
 
 function setupUI() {
-    $("#non-ppc").after("<div class='names-list col' id='nonppc-names-list'></div>");
+    $("#nonppc").after("<div class='names-list col' id='nonppc-names-list'></div>");
     $("#ppc").after("<div class='names-list row' id='ppc-names-list'></div>");
 }
 
@@ -94,15 +94,15 @@ function makeDraggable() {
     $(".list-item").draggable({ 
         revert: function(event , ui) {
             setWhite(this);
-            clearAddedClasses($("#ppc-container-header"));
-            clearAddedClasses($("#non-ppc-container-header"));
+            clearAddedClasses($("#ppc-header"));
+            clearAddedClasses($("#nonppc-header"));
             $("html,body").css("cursor","default");
             return true;
         },
 
         start: function (event, ui) {
-            updateOffHover($("#ppc-container-header"));
-            updateOffHover($("#non-ppc-container-header"));
+            updateOffHover($("#ppc-header"));
+            updateOffHover($("#nonppc-header"));
         },
 
         drag: function (event, ui) {
@@ -119,8 +119,8 @@ function makeDroppable(containerElement, item) {
         $("html,body").css("cursor","default");
         return; 
     }
-    clearAddedClasses($("#ppc-container-header"));
-    clearAddedClasses($("#non-ppc-container-header"));
+    clearAddedClasses($("#ppc-header"));
+    clearAddedClasses($("#nonppc-header-container"));
     updateStyling(element);
             
     if ($(containerElement).attr('id') == "ppc") {
@@ -142,18 +142,18 @@ $(document).ready(function(){
     makeNames(nonppc, "#nonppc-names-list");
     makeDraggable();
     
-    $(".name-container").droppable({
+    $(".droppable-content").droppable({
         over: function(event, ui) {
             if ($(this).attr('id') == "ppc") {
-                updateHover($("#ppc-container-header"));
+                updateHover($("#ppc-header"));
             } else {
-                updateHover($("#non-ppc-container-header"));
+                updateHover($("#nonppc-header"));
             }
         },
         
         out: function(event, ui) {
-            updateOffHover($("#ppc-container-header"));
-            updateOffHover($("#non-ppc-container-header"));
+            updateOffHover($("#ppc-header"));
+            updateOffHover($("#nonppc-header"));
         },
 
         drop: function(event, ui) {

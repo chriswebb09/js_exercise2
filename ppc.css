@@ -19,7 +19,7 @@
     margin-left: 50px;
 }
 
-.element-container {
+.content-container {
     margin-right: 120px;
 }
 
@@ -35,7 +35,7 @@
     z-index: 5;
 }
 
-.name-container { 
+.droppable-content { 
     margin-top: 20px;
 }
 
@@ -47,10 +47,6 @@
     padding-left: 10px;
     padding-top: 20px;
 }
-
-/* .container-header-draggable {
-    background-color: #a5c6e4;
-} */
 
 .names-list {
     position: absolute;
